@@ -1,0 +1,7 @@
+name: Amberpack
+version: '${project.version}'
+main: me.Kugelbltz.amberpack.AmberPack
+api-version: 1.18
+dependencies: [ ProjectKorra ]
+authors: [ Kugelbltz ]
+description: AmberPack for ProjectKorra
