@@ -1,5 +1,5 @@
 name: Amberpack
-version: '${project.version}'
+version: 'AmberPack-1.1'
 main: me.Kugelbltz.amberpack.AmberPack
 api-version: 1.18
 dependencies: [ ProjectKorra ]
