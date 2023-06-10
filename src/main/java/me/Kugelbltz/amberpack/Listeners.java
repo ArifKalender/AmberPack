@@ -21,21 +21,22 @@ public class Listeners implements Listener {
         if (!player.isSneaking()) {
             if (bendingPlayer.getBoundAbilityName().equalsIgnoreCase("detonatingbreath")) {
                 new DetonatingBreath(player);
-            }if (bendingPlayer.getBoundAbilityName().equalsIgnoreCase("blazinginferno")) {
+            }
+            if (bendingPlayer.getBoundAbilityName().equalsIgnoreCase("blazinginferno")) {
                 new BlazingInferno(player);
             }
         }
     }
 
     @EventHandler
-    public void onLeftClick(PlayerAnimationEvent event){
+    public void onLeftClick(PlayerAnimationEvent event) {
         Player player = event.getPlayer();
         BendingPlayer bendingPlayer = BendingPlayer.getBendingPlayer(player);
 
-            if (bendingPlayer.getBoundAbilityName().equalsIgnoreCase("meteor")) {
-                new Meteor(player);
-            }
-        if(player.isSneaking()){
+        if (bendingPlayer.getBoundAbilityName().equalsIgnoreCase("meteor")) {
+            new Meteor(player);
+        }
+        if (player.isSneaking()) {
             if (bendingPlayer.getBoundAbilityName().equalsIgnoreCase("volatileblast")) {
                 new VolatileBlast(player);
             }

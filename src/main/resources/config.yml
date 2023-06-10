@@ -1,0 +1,17 @@
+AmberPack:
+  BlazingInferno:
+    Cooldown: 24000
+    Damage: 0.25
+    Radius: 6
+  DetonatingBreath:
+    Cooldown: 12000
+    Damage: 3
+    Range: 7
+  Meteor:
+    Cooldown: 15000
+    Damage: 5
+    Radius: 5
+  VolatileBlast:
+    Cooldown: 6000
+    Power: 4
+    Damage: 4

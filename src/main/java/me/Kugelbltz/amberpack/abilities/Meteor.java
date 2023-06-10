@@ -4,7 +4,6 @@ import com.projectkorra.projectkorra.ProjectKorra;
 import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.CombustionAbility;
 import com.projectkorra.projectkorra.util.DamageHandler;
-import com.projectkorra.projectkorra.waterbending.multiabilities.WaterArms;
 import me.Kugelbltz.amberpack.AmberPack;
 import me.Kugelbltz.amberpack.Listeners;
 import org.bukkit.Location;
@@ -16,10 +15,16 @@ import org.bukkit.util.Vector;
 
 public class Meteor extends CombustionAbility implements AddonAbility {
 
-    private Location location;
-    private Vector dir;
-    private boolean armorstandalive=false;
     Location armorStandLocation;
+    ArmorStand armorStand;
+    private final double damage = AmberPack.amberpack.getConfig().getDouble("AmberPack.Meteor.Damage");
+    private final double radius = AmberPack.amberpack.getConfig().getDouble("AmberPack.Meteor.Radius");
+    private final int cd = AmberPack.amberpack.getConfig().getInt("AmberPack.Meteor.Cooldown");
+    private final Location location;
+    private final Vector dir;
+    private boolean armorstandalive = false;
+
+
     public Meteor(Player player) {
         super(player);
         location = player.getLocation();
@@ -30,19 +35,16 @@ public class Meteor extends CombustionAbility implements AddonAbility {
         }
     }
 
-
-    ArmorStand armorStand;
-
     @Override
     public void progress() {
-        if(armorstandalive==false) {
+        if (!armorstandalive) {
             armorStand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND, false);
             armorstandalive = true;
 
             for (int i = 0; i <= 10; i++) {
                 location.add(dir);
                 if (i == 10) {
-                    armorStandLocation=new Location(location.getWorld(), location.getX(), location.getY() + 10, location.getZ());
+                    armorStandLocation = new Location(location.getWorld(), location.getX(), location.getY() + 10, location.getZ());
                     armorStand.teleport(armorStandLocation);
                     armorStand.getEquipment().setHelmet(new ItemStack(Material.OBSIDIAN, 1));
                     armorStand.setInvisible(true);
@@ -52,17 +54,16 @@ public class Meteor extends CombustionAbility implements AddonAbility {
 
             }
         }
-        location.getWorld().spawnParticle(Particle.FLAME,armorStand.getLocation(),5,0.2,0.2,0.2,0.05);
-        if(armorStand.isOnGround()){
-            armorStand.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_HUGE,armorStand.getLocation(),3,0,0,0,0.04);
-            for(Entity entity:armorStand.getWorld().getNearbyEntities(armorStand.getLocation(),5,5,5)){
-                if(entity instanceof LivingEntity){
-                    ((LivingEntity) entity).damage(5);
+        location.getWorld().spawnParticle(Particle.FLAME, armorStand.getLocation(), 5, 0.2, 0.2, 0.2, 0.05);
+        if (armorStand.isOnGround()) {
+            armorStand.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_HUGE, armorStand.getLocation(), 3, 0, 0, 0, 0.04);
+            for (Entity entity : armorStand.getWorld().getNearbyEntities(armorStand.getLocation(), radius, radius, radius)) {
+                if (entity instanceof LivingEntity) {
+                    DamageHandler.damageEntity(entity, player, damage, this);
                 }
             }
             armorStand.remove();
             remove();
-            return;
         }
     }
 
@@ -78,7 +79,7 @@ public class Meteor extends CombustionAbility implements AddonAbility {
 
     @Override
     public long getCooldown() {
-        return 30000;
+        return cd;
     }
 
     @Override

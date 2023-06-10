@@ -29,7 +29,6 @@ public class Utilitiy {
     }
 
 
-
     public static Location getRandomLocation(Location location, double radius) {
         Random random = new Random();
         double angle = random.nextDouble() * 2 * Math.PI;

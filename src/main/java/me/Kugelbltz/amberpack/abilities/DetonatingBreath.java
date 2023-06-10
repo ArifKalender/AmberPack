@@ -21,6 +21,9 @@ public class DetonatingBreath extends CombustionAbility implements AddonAbility 
     public int duration = 0;
     Location location;
     Vector dir;
+    private final double damage = AmberPack.amberpack.getConfig().getDouble("AmberPack.DetonatingBreath.Damage");
+    private final int range = AmberPack.amberpack.getConfig().getInt("AmberPack.DetonatingBreath.Range");
+    private final int cd = AmberPack.amberpack.getConfig().getInt("AmberPack.DetonatingBreath.Cooldown");
 
     public DetonatingBreath(Player player) {
         super(player);
@@ -32,22 +35,22 @@ public class DetonatingBreath extends CombustionAbility implements AddonAbility 
     }
 
     public void createBreath() {
-        location=player.getEyeLocation();
-        dir=location.getDirection();
-        for (int i = 0; i <= 7; i++) {
+        location = player.getEyeLocation();
+        dir = location.getDirection();
+        for (int i = 0; i <= range; i++) {
 
-            location.getWorld().spawnParticle(Particle.SMOKE_NORMAL, location,3,0.3,0.3,0.3,0.05);
+            location.getWorld().spawnParticle(Particle.SMOKE_NORMAL, location, 3, 0.3, 0.3, 0.3, 0.05);
             location.add(dir);
 
-            if(location.getBlock().getType()!=Material.AIR){
+            if (location.getBlock().getType() != Material.AIR) {
                 location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1, 1);
-                location.getWorld().spawnParticle(Particle.EXPLOSION_LARGE,location,3,0,0,0,0);
+                location.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, location, 3, 0, 0, 0, 0);
             }
             for (Entity entity : location.getWorld().getNearbyEntities(location, 0.3, 0.3, 0.3)) {
                 if (entity instanceof LivingEntity) {
                     if (entity != player) {
                         location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1, 1);
-                        DamageHandler.damageEntity(entity, player, 3, this);
+                        DamageHandler.damageEntity(entity, player, damage, this);
                         ParticleEffect.EXPLOSION_LARGE.display(location, 3);
                     }
                 }
@@ -91,7 +94,7 @@ public class DetonatingBreath extends CombustionAbility implements AddonAbility 
 
     @Override
     public long getCooldown() {
-        return 8000;
+        return cd;
     }
 
     @Override
