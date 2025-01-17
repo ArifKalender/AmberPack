@@ -1,0 +1,48 @@
+Abilities:
+  DetonatingBreath:
+    Enabled: true
+    Damage: 1
+    Duration: 1750
+    Cooldown: 7400
+    Range: 12
+    Blindness:
+      Self: true
+      Target: true
+      SelfDuration: 500
+      TargetDuration: 500
+  BlazingInferno: #kombo aoe yeteneği
+    Enabled: true
+    IgnoreInvulnerabilityFrames: true
+    Damage: 0.1
+    Duration: 2000
+    Cooldown: 10000
+    Radius: 6
+  Meteor:
+    Enabled: true
+    Damage: 3
+    FireDuration: 500
+    VerticalSpeed: 1
+    HorizontalSpeed: 1
+    Range: 25 #oyuncu ve armorstand arasındaki mesafeyi alcaksın, server ownerları speedler ile oynayarak nasıl ilerlediğini ayarlayabilecek. Eğer belirli bi süre boyunca range uzaklaşmazsa armor stand yok olacak cooldown fln girmeyecek.
+    BlockDamage:
+      Enabled: true
+      Radius: 2.5
+      Duration: 6000
+  VolatileBlast: #kombo blast yeteneği çok havalı görüncek
+    Enabled: true
+    Damage: 2
+    Controllable: false
+    Speed: 3
+Strings:
+  DetonatingBreath:
+    Description: ''
+    Instructions: ''
+  BlazingInferno:
+    Description: ''
+    Instructions: ''
+  Meteor:
+    Description: ''
+    Instructions: ''
+  VolatileBlast:
+    Description: ''
+    Instructions: ''

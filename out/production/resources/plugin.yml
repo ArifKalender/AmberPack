@@ -1,0 +1,4 @@
+name: AmberPack
+version: '2.0'
+main: me.Kugelbltz.amberPack.AmberPack
+api-version: '1.20'

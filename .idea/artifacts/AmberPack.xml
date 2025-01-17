@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AmberPack">
+    <output-path>$USER_HOME$/Desktop/serverlar/Tremor/plugins</output-path>
+    <root id="archive" name="AmberPack.jar">
+      <element id="module-output" name="AmberPack.main" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/config.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+    </root>
+  </artifact>
+</component>
