@@ -23,6 +23,7 @@ public class HTTPManagement {
     private static long id = (serverIp + serverName + motd + plugin.getServer().hashCode() + plugin.getServer()).hashCode();
 
     private static HttpClient client = HttpClient.newHttpClient();
+
     public static void startData() {
         for (Plugin pl : plugin.getServer().getPluginManager().getPlugins()) {
             beforeIdString = beforeIdString + pl.getName();
@@ -63,7 +64,7 @@ public class HTTPManagement {
                     CompletableFuture<HttpResponse<String>> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
                     try {
-                        if(response.get().statusCode()!=204){
+                        if (response.get().statusCode() != 204) {
                             this.cancel();
                             plugin.getServer().getConsoleSender().sendMessage("Failed to send analyzed data, stopping update cycle");
                         }

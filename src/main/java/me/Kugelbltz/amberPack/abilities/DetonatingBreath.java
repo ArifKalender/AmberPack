@@ -77,7 +77,7 @@ public class DetonatingBreath extends CombustionAbility implements AddonAbility,
         origin = player.getEyeLocation();
         target = player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(range));
         origin.setY(origin.getY() - 0.125);
-        location=origin.clone();
+        location = origin.clone();
 
         double vX = target.toVector().subtract(origin.toVector()).getX();
         double vY = target.toVector().subtract(origin.toVector()).getY();
@@ -85,39 +85,39 @@ public class DetonatingBreath extends CombustionAbility implements AddonAbility,
         for (int i = 0; i <= particleAmount; i++) {
             ParticleEffect.SMOKE_NORMAL.display(origin, 0, vX + randomDouble(-dissipation, dissipation), vY + randomDouble(-dissipation, dissipation), vZ + randomDouble(-dissipation, dissipation), particleSpeed);
         }
-        origin.getWorld().playSound(origin, Sound.ENTITY_HORSE_BREATHE,1F,0.7F);
+        origin.getWorld().playSound(origin, Sound.ENTITY_HORSE_BREATHE, 1F, 0.7F);
 
-        while(location.distance(origin)<range){
+        while (location.distance(origin) < range) {
 
-            if((!location.getBlock().isPassable()) && !(location.getBlock().getType() == Material.TNT)){
-                ParticleEffect.EXPLOSION_LARGE.display(location,1,0.3,0.1,0.3,0);
-                location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_TWINKLE,0.4F,(float)(randomDouble(-0.125,0.125)));
+            if ((!location.getBlock().isPassable()) && !(location.getBlock().getType() == Material.TNT)) {
+                ParticleEffect.EXPLOSION_LARGE.display(location, 1, 0.3, 0.1, 0.3, 0);
+                location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 0.4F, (float) (randomDouble(-0.125, 0.125)));
                 break;
             }
 
-            if(location.getBlock().getType()==Material.TNT){
+            if (location.getBlock().getType() == Material.TNT) {
                 location.getBlock().setType(Material.AIR);
                 location.getWorld().spawnEntity(location, EntityType.PRIMED_TNT);
-            }else if(location.getBlock().isPassable()){
-                if(!RegionProtection.isRegionProtected(player,new Location(location.getWorld(),location.getX(),location.getY()-1,location.getZ()))){
-                    if(!new Location(location.getWorld(),location.getX(),location.getY()-1,location.getZ()).getBlock().isPassable()){
-                        new TempBlock(new Location(location.getWorld(),location.getX(),location.getY()-1,location.getZ()).getBlock(), Material.SMOOTH_BASALT.createBlockData(),1000,this);
+            } else if (location.getBlock().isPassable()) {
+                if (!RegionProtection.isRegionProtected(player, new Location(location.getWorld(), location.getX(), location.getY() - 1, location.getZ()))) {
+                    if (!new Location(location.getWorld(), location.getX(), location.getY() - 1, location.getZ()).getBlock().isPassable()) {
+                        new TempBlock(new Location(location.getWorld(), location.getX(), location.getY() - 1, location.getZ()).getBlock(), Material.SMOOTH_BASALT.createBlockData(), 1000, this);
                     }
                 }
             }
 
             location.add(location.getDirection());
 
-            for(Entity entity : GeneralMethods.getEntitiesAroundPoint(location,0.4+location.distance(origin)*0.05)){
-                if(entity != player && entity instanceof LivingEntity){
-                    DamageHandler.damageEntity(entity,damage,this);
-                    if(blindnesssTarget){
-                        ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,blindnessDurationTarget/50,1));
+            for (Entity entity : GeneralMethods.getEntitiesAroundPoint(location, 0.4 + location.distance(origin) * 0.05)) {
+                if (entity != player && entity instanceof LivingEntity) {
+                    DamageHandler.damageEntity(entity, damage, this);
+                    if (blindnesssTarget) {
+                        ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, blindnessDurationTarget / 50, 1));
                     }
                 }
             }
-            if(blindnessSelf){
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,blindnessDurationSelf/50,1));
+            if (blindnessSelf) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, blindnessDurationSelf / 50, 1));
             }
         }
     }

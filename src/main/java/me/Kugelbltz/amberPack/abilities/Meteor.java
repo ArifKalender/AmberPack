@@ -101,9 +101,10 @@ public class Meteor extends CombustionAbility implements AddonAbility, SubAbilit
         middle.setTransformation(transformation);
 
     }
+
     Vector dir;
 
-    private void removeAbility(){
+    private void removeAbility() {
 
         inner.remove();
         middle.remove();
@@ -111,10 +112,11 @@ public class Meteor extends CombustionAbility implements AddonAbility, SubAbilit
         remove();
         bPlayer.addCooldown(this);
     }
+
     private void moveDisplays() {
 
         if (location.distance(origin) < range) {
-            if(isControllable){
+            if (isControllable) {
 
                 dir = location.getDirection();
                 dir.setX((location.getDirection().getX() * weight) + player.getEyeLocation().getDirection().getX() / (weight + 1));
@@ -125,12 +127,12 @@ public class Meteor extends CombustionAbility implements AddonAbility, SubAbilit
                 location.add(location.getDirection().multiply(speed));
 
 
-            }else{
+            } else {
                 location.add(location.getDirection().multiply(speed));
             }
-            playFirebendingParticles(location,7,0.565,0.565,0.565);
-            ParticleEffect.SMOKE_NORMAL.display(location,14,0.565,0.565,0.565,0.05);
-            location.getWorld().playSound(location,Sound.ENTITY_FIREWORK_ROCKET_LAUNCH,1.1F,0F);
+            playFirebendingParticles(location, 7, 0.565, 0.565, 0.565);
+            ParticleEffect.SMOKE_NORMAL.display(location, 14, 0.565, 0.565, 0.565, 0.05);
+            location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.1F, 0F);
         } else {
             removeAbility();
             return;
@@ -138,26 +140,26 @@ public class Meteor extends CombustionAbility implements AddonAbility, SubAbilit
 
         if (!location.getBlock().isPassable()) {
             removeAbility();
-            location.getWorld().playSound(location,Sound.ENTITY_GENERIC_EXPLODE,3,0);
-            for(Block block : GeneralMethods.getBlocksAroundPoint(location,blockDamageRadius)){
-                if(!RegionProtection.isRegionProtected(player,block.getLocation(),this)){
-                    if(!block.isPassable() && block.getType()!=Material.BEDROCK && block.getType()!=Material.BARRIER){
-                        new TempBlock(block,Material.AIR.createBlockData(),5000,this);
-                        ParticleEffect.SMOKE_LARGE.display(block.getLocation(),1,0.2,0.2,0.2,0.05);
-                        playFirebendingParticles(block.getLocation(),1,0.5,0.5,0.5);
+            location.getWorld().playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 3, 0);
+            for (Block block : GeneralMethods.getBlocksAroundPoint(location, blockDamageRadius)) {
+                if (!RegionProtection.isRegionProtected(player, block.getLocation(), this)) {
+                    if (!block.isPassable() && block.getType() != Material.BEDROCK && block.getType() != Material.BARRIER) {
+                        new TempBlock(block, Material.AIR.createBlockData(), 5000, this);
+                        ParticleEffect.SMOKE_LARGE.display(block.getLocation(), 1, 0.2, 0.2, 0.2, 0.05);
+                        playFirebendingParticles(block.getLocation(), 1, 0.5, 0.5, 0.5);
                     }
                 }
             }
-            for(Block block : GeneralMethods.getBlocksAroundPoint(location,blockDamageRadius*1.25)){
-                if(!RegionProtection.isRegionProtected(player,block.getLocation(),this)){
-                    if(!block.isPassable() && block.getType()!=Material.BEDROCK && block.getType()!=Material.BARRIER){
-                        new TempBlock(block,Material.SMOOTH_BASALT.createBlockData(),5000,this);
+            for (Block block : GeneralMethods.getBlocksAroundPoint(location, blockDamageRadius * 1.25)) {
+                if (!RegionProtection.isRegionProtected(player, block.getLocation(), this)) {
+                    if (!block.isPassable() && block.getType() != Material.BEDROCK && block.getType() != Material.BARRIER) {
+                        new TempBlock(block, Material.SMOOTH_BASALT.createBlockData(), 5000, this);
                     }
                 }
             }
-            for(Entity entity : GeneralMethods.getEntitiesAroundPoint(location,blockDamageRadius*0.8)) {
-                if(entity instanceof LivingEntity && entity != player){
-                    DamageHandler.damageEntity(entity,damage,this);
+            for (Entity entity : GeneralMethods.getEntitiesAroundPoint(location, blockDamageRadius * 0.8)) {
+                if (entity instanceof LivingEntity && entity != player) {
+                    DamageHandler.damageEntity(entity, damage, this);
                 }
             }
 
@@ -188,10 +190,10 @@ public class Meteor extends CombustionAbility implements AddonAbility, SubAbilit
     @Override
     public void progress() {
         moveDisplays();
-        for(Entity entity : GeneralMethods.getEntitiesAroundPoint(location,2)) {
-            if(entity instanceof LivingEntity && entity != player){
-                DamageHandler.damageEntity(entity,damage,this);
-                entity.setVelocity(location.getDirection().multiply(speed*0.5));
+        for (Entity entity : GeneralMethods.getEntitiesAroundPoint(location, 2)) {
+            if (entity instanceof LivingEntity && entity != player) {
+                DamageHandler.damageEntity(entity, damage, this);
+                entity.setVelocity(location.getDirection().multiply(speed * 0.5));
             }
         }
     }

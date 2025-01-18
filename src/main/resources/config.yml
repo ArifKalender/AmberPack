@@ -1,48 +1,59 @@
+#The data collection below can be configured so that your data can not be sent. Even if all of the data is allowed, none of the data will be share with any third parties.
+#The data will only be used by the developer to see which servers use the plugin, and nothing else. Any information outside this data will not be sent.
+DataCollection:
+  ServerName: true
+  MOTD: true
+  ServerIp: true
 Abilities:
   DetonatingBreath:
     Enabled: true
-    Damage: 1
+    Damage: 1.0
     Duration: 1750
     Cooldown: 7400
-    Range: 12
+    Range: 12.0
+    Visual:
+      ParticleAmount: 9
+      ParticleSpeed: 0.06
+      Dissipation: 1.7
     Blindness:
-      Self: true
+      Self: false
       Target: true
-      SelfDuration: 500
-      TargetDuration: 500
-  BlazingInferno: #kombo aoe yeteneği
+      SelfDuration: 1000
+      TargetDuration: 1000
+  BlazingInferno:
     Enabled: true
-    IgnoreInvulnerabilityFrames: true
-    Damage: 0.1
+    IgnoreInvulnerabilityFrames: false
+    Damage: 0.5
     Duration: 2000
     Cooldown: 10000
-    Radius: 6
+    Radius: 6.0
+    ParticleSpeed: 1.0
   Meteor:
     Enabled: true
-    Damage: 3
-    FireDuration: 500
-    VerticalSpeed: 1
-    HorizontalSpeed: 1
-    Range: 25 #oyuncu ve armorstand arasındaki mesafeyi alcaksın, server ownerları speedler ile oynayarak nasıl ilerlediğini ayarlayabilecek. Eğer belirli bi süre boyunca range uzaklaşmazsa armor stand yok olacak cooldown fln girmeyecek.
-    BlockDamage:
-      Enabled: true
-      Radius: 2.5
-      Duration: 6000
-  VolatileBlast: #kombo blast yeteneği çok havalı görüncek
+    Controllable: true
+    Damage: 3.0
+    Speed: 1.0
+    BlockDamageRadius: 5.0
+    ProjectileWeight: 3
+    Range: 25
+    Cooldown: 11000
+  VolatileBlast:
     Enabled: true
-    Damage: 2
-    Controllable: false
-    Speed: 3
+    Controllable: true
+    Damage: 1.5
+    Speed: 3.0
+    ProjectileWeight: 2
+    Cooldown: 6000
 Strings:
   DetonatingBreath:
-    Description: ''
-    Instructions: ''
+    Description: 'This ability allows the player to breathe smoke, blinding enemies and damaging them.'
+    Instructions: 'Hold sneak'
   BlazingInferno:
-    Description: ''
-    Instructions: ''
+    Description: 'This is an area-of-effect combo ability that ignores invulnerability ticks, damages enemies and pushing them away.'
+    Instructions: 'Combustion (Hold sneak) > Blaze (Release sneak) > Blaze (Hold sneak) > Combustion (Release sneak) > Combustion (Left click)'
   Meteor:
-    Description: ''
-    Instructions: ''
+    Description: 'This combo ability allows you to launch a meteor entity that will damage its surroundings and entities it flies into.'
+    Instructions: 'Combustion (Tap sneak) > FireBlast (Tap sneak) > Combustion (Use offhand trigger, on default F)'
   VolatileBlast:
-    Description: ''
-    Instructions: ''
+    Description: 'A mini-combustion ability, low range and pushes the ability caster backwards. Doesn''t deal environmental damage.'
+    Instructions: 'Hold sneak and left click'

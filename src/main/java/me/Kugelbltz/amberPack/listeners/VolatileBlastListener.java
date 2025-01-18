@@ -9,10 +9,10 @@ import org.bukkit.event.player.PlayerAnimationEvent;
 public class VolatileBlastListener implements Listener {
 
     @EventHandler
-    private void onClick(PlayerAnimationEvent event){
-        if(event.getPlayer().isSneaking()){
+    private void onClick(PlayerAnimationEvent event) {
+        if (event.getPlayer().isSneaking()) {
             BendingPlayer bPlayer = BendingPlayer.getBendingPlayer(event.getPlayer());
-            if(bPlayer.getBoundAbilityName().equalsIgnoreCase("VolatileBlast")){
+            if (bPlayer.getBoundAbilityName().equalsIgnoreCase("VolatileBlast")) {
                 new VolatileBlast(event.getPlayer());
             }
         }

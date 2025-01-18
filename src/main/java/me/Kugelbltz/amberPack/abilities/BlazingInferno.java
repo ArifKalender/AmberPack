@@ -33,28 +33,29 @@ public class BlazingInferno extends CombustionAbility implements ComboAbility, S
     double particleSpeed;
 
     Location centre;
+
     public BlazingInferno(Player player) {
         super(player);
-        if(bPlayer.canBendIgnoreBinds(this) &&!CoreAbility.hasAbility(player,BlazingInferno.class)){
+        if (bPlayer.canBendIgnoreBinds(this) && !CoreAbility.hasAbility(player, BlazingInferno.class)) {
             setFields();
             start();
         }
     }
 
-    private void setFields(){
+    private void setFields() {
         ignoreInvulnerabilityFrames = plugin.getConfig().getBoolean("Abilities.BlazingInferno.IgnoreInvulnerabilityFrames");
         damage = plugin.getConfig().getDouble("Abilities.BlazingInferno.Damage");
         duration = plugin.getConfig().getLong("Abilities.BlazingInferno.Duration");
         cooldown = plugin.getConfig().getLong("Abilities.BlazingInferno.Cooldown");
         radius = plugin.getConfig().getDouble("Abilities.BlazingInferno.Radius");
-        particleSpeed = (plugin.getConfig().getDouble("Abilities.BlazingInferno.ParticleSpeed"))/16.667;
-        centre=player.getLocation();
+        particleSpeed = (plugin.getConfig().getDouble("Abilities.BlazingInferno.ParticleSpeed")) / 16.667;
+        centre = player.getLocation();
 
     }
 
-    private void generateParticles(){
+    private void generateParticles() {
 
-        for(Location point : Utilities.generateCircle(centre,radius, (int) (radius*15))){
+        for (Location point : Utilities.generateCircle(centre, radius, (int) (radius * 15))) {
 
 
             double vX = centre.toVector().subtract(point.toVector()).getX();
@@ -62,49 +63,49 @@ public class BlazingInferno extends CombustionAbility implements ComboAbility, S
             double vZ = centre.toVector().subtract(point.toVector()).getZ();
 
 
-
             if (Math.random() < 0.1) {
 
-                if(bPlayer.hasSubElement(Element.BLUE_FIRE)){
+                if (bPlayer.hasSubElement(Element.BLUE_FIRE)) {
                     ParticleEffect.SOUL_FIRE_FLAME.display(point, 0, vX, vY, vZ, particleSpeed);
 
-                }else{
+                } else {
                     ParticleEffect.FLAME.display(point, 0, vX, vY, vZ, particleSpeed);
 
                 }
-                ParticleEffect.SMOKE_NORMAL.display(point, 0, 0,1,0, 0.05);
+                ParticleEffect.SMOKE_NORMAL.display(point, 0, 0, 1, 0, 0.05);
 
             }
         }
 
     }
-/*
-*
-*
-* for (Location particle : Methods.generateCircle(location, 3)) {
-            if (Math.random() <= 0.25) {
-                double vX = location.toVector().subtract(particle.toVector()).getX();
-                double vY = location.toVector().subtract(particle.toVector()).getY();
-                double vZ = location.toVector().subtract(particle.toVector()).getZ();
-                ParticleEffect.END_ROD.display(particle, 0, vX, vY, vZ, 0.085);
+
+    /*
+    *
+    *
+    * for (Location particle : Methods.generateCircle(location, 3)) {
+                if (Math.random() <= 0.25) {
+                    double vX = location.toVector().subtract(particle.toVector()).getX();
+                    double vY = location.toVector().subtract(particle.toVector()).getY();
+                    double vZ = location.toVector().subtract(particle.toVector()).getZ();
+                    ParticleEffect.END_ROD.display(particle, 0, vX, vY, vZ, 0.085);
+                }
             }
-        }
-* */
+    * */
     @Override
     public void progress() {
         generateParticles();
 
-        if(duration+this.getStartTime() < System.currentTimeMillis()){
+        if (duration + this.getStartTime() < System.currentTimeMillis()) {
             remove();
             bPlayer.addCooldown(this);
             return;
         }
 
-        for(Entity entity : GeneralMethods.getEntitiesAroundPoint(centre,radius)){
-            if (entity instanceof LivingEntity && entity!=player){
-                DamageHandler.damageEntity(entity,damage,this);
+        for (Entity entity : GeneralMethods.getEntitiesAroundPoint(centre, radius)) {
+            if (entity instanceof LivingEntity && entity != player) {
+                DamageHandler.damageEntity(entity, damage, this);
                 entity.setVelocity(centre.toVector().subtract(entity.getLocation().toVector()).normalize().multiply(-1));
-                if(ignoreInvulnerabilityFrames){
+                if (ignoreInvulnerabilityFrames) {
                     ((LivingEntity) entity).setNoDamageTicks(0);
                 }
             }

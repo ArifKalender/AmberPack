@@ -15,14 +15,13 @@ public class Utilities {
             double angle = i * angleIncrement;
             double x = center.getX() + radius * Math.cos(angle);
             double z = center.getZ() + radius * Math.sin(angle);
-            // Keep the same Y level as the center
             locations.add(new Location(center.getWorld(), x, center.getY(), z));
         }
 
         return locations;
     }
 
-    public static double randomDouble(double origin, double limit){
-        return origin + (float)(Math.random() * ((limit - origin) + 1));
+    public static double randomDouble(double origin, double limit) {
+        return origin + (float) (Math.random() * ((limit - origin) + 1));
     }
 }

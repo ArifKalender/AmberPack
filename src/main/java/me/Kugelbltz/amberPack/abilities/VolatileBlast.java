@@ -35,13 +35,13 @@ public class VolatileBlast extends CombustionAbility implements AddonAbility, Su
     private int weight;
     private int tick;
 
-    Location location,origin;
+    Location location, origin;
 
     public VolatileBlast(Player player) {
         super(player);
         if (bPlayer.canBend(this) && !CoreAbility.hasAbility(player, VolatileBlast.class)) {
             setFields();
-            location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_LAUNCH,3,0);
+            location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 3, 0);
             player.setVelocity(player.getEyeLocation().getDirection().multiply(-1));
             start();
         }
@@ -55,7 +55,7 @@ public class VolatileBlast extends CombustionAbility implements AddonAbility, Su
         controllable = plugin.getConfig().getBoolean("Abilities.VolatileBlast.Controllable");
         weight = plugin.getConfig().getInt("Abilities.VolatileBlast.ProjectileWeight");
         location = player.getEyeLocation();
-        origin=location.clone();
+        origin = location.clone();
     }
 
     Vector dir;
@@ -76,12 +76,12 @@ public class VolatileBlast extends CombustionAbility implements AddonAbility, Su
                 } else {
                     location.add(location.getDirection());
                 }
-                playFirebendingParticles(location,3,0.05,0.05,0.05);
+                playFirebendingParticles(location, 3, 0.05, 0.05, 0.05);
                 ParticleEffect.SMOKE_LARGE.display(location, 1, 0, 0, 0, 0);
                 ParticleEffect.END_ROD.display(location, 1, 0, 0, 0, 0.025);
-                if(tick%15==0){
+                if (tick % 15 == 0) {
                     ParticleEffect.END_ROD.display(location, 80, 0, 0, 0, 0.125);
-                    location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_BLAST_FAR,3,0);
+                    location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_BLAST_FAR, 3, 0);
                 }
             } else {
                 bPlayer.addCooldown(this);
@@ -89,11 +89,11 @@ public class VolatileBlast extends CombustionAbility implements AddonAbility, Su
                 return;
             }
 
-            for(Entity entity : GeneralMethods.getEntitiesAroundPoint(location,1)){
-                if(entity instanceof LivingEntity && entity != player){
-                    DamageHandler.damageEntity(entity,damage,this);
+            for (Entity entity : GeneralMethods.getEntitiesAroundPoint(location, 1)) {
+                if (entity instanceof LivingEntity && entity != player) {
+                    DamageHandler.damageEntity(entity, damage, this);
                     ParticleEffect.EXPLOSION_LARGE.display(location, 3, 0, 0, 0, 0.125);
-                    location.getWorld().playSound(location, Sound.ENTITY_GENERIC_EXPLODE,3,2);
+                    location.getWorld().playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 3, 2);
 
                     bPlayer.addCooldown(this);
                     remove();
@@ -101,12 +101,12 @@ public class VolatileBlast extends CombustionAbility implements AddonAbility, Su
                 }
             }
 
-            if(!location.getBlock().isPassable()){
+            if (!location.getBlock().isPassable()) {
                 ParticleEffect.EXPLOSION_LARGE.display(location, 3, 0, 0, 0, 0.125);
-                location.getWorld().playSound(location, Sound.ENTITY_GENERIC_EXPLODE,3,2);
-                for(Entity entity : GeneralMethods.getEntitiesAroundPoint(location,2)){
-                    if(entity instanceof LivingEntity){
-                        DamageHandler.damageEntity(entity,damage,this);
+                location.getWorld().playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 3, 2);
+                for (Entity entity : GeneralMethods.getEntitiesAroundPoint(location, 2)) {
+                    if (entity instanceof LivingEntity) {
+                        DamageHandler.damageEntity(entity, damage, this);
                     }
                 }
                 bPlayer.addCooldown(this);
